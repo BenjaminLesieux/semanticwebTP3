@@ -1,0 +1,76 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ns: <http://www.owl-ontologies.com/unnamed.owl#>
+
+##(1) Instances of the class Son ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Person
+}
+
+# Five sons: Pedro, Tom, Paul, Michael, Thomas
+
+##(2) Instances of the class Daughter ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Daughter
+}
+
+# Three daughters: Chloé, Sylvie, Claude
+
+##(3) Instances of the class Parent ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Parent
+}
+
+# Three parents: Peter, Marie, Thomas
+
+##(4) Instances of the class Father ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Father
+}
+
+# Two fathers: Peter, Thomas
+
+##(5) Instances of the class Mother ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Mother
+}
+
+# One mother: Marie
+
+##(6) Instances of the class Grandmother ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Grandmother
+}
+
+# None displayed # - - - - - - - - - - - #
+
+##(7) Instances of the class Grandfather ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Grandfather
+}
+
+# One grandfather: Peter
+
+##(8) Instances of the class Brother ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Brother
+}
+
+# None displayed # - - - - - - - - - - - #
+
+##(9) Instances of the class Sister ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT *
+WHERE {
+	?person rdf:type ns:Sister
+}
+
+# None displayed # - - - - - - - - - - - #

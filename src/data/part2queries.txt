@@ -1,0 +1,106 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+PREFIX ns: <http://www.owl-ontologies.com/unnamed.owl#>
+
+##(1) List (name, age) of children of Peter ## - - - - - - - - - - - - - - - - - - - - - -
+SELECT ?name ?age
+WHERE{
+	?peter ns:name "Peter" .
+	?peter ns:isParentOf ?childofpeter .
+	?childofpeter ns:name ?name .
+	?childofpeter ns:age ?age
+}
+
+## Result:
+#Chloé^^xsd:string	18
+#Paul^^xsd:string	38
+#Sylvie^^xsd:string	30
+#Thomas^^xsd:string	40
+
+##(2) List of persons whose father is more that 40 years old ## - - - - - - - - - - - - - -
+SELECT ?fathers ?children ?age
+WHERE{
+	?fathers ns:isFatherOf ?children
+	?fathers ns:age ?age
+	FILTER(?age >40)
+}
+
+## Result:
+#ns:Peter	ns:Thomas	70
+
+##(3) List (name, age) of all French citizens. For each one, if he/she is married, display the name of his wife/her husband
+SELECT ?name ?age ?isMarriedWith
+WHERE {
+	?person rdf:type ns:Person .
+	?person ns:nationality ?nationality
+	FILTER(?nationality = "French")
+	?person ns:name ?name .
+	?person ns:age ?age .
+	?person ns:isMarriedWith ?isMarriedWith
+}
+
+##Result:
+#Peter^^xsd:string	70	ns:Marie
+#Marie^^xsd:string	69	ns:Peter
+#Thomas^^xsd:string	40	ns:Alex
+
+##(4) List of the name of persons who are brother of someone ## - - - - - - - - - - - - - -
+SELECT DISTINCT ?child1
+WHERE {
+	?parent1 ns:isParentOf ?child1 .
+	?child1 rdf:type ns:Male .
+	?parent2 ns:isParentOf ?child2 .
+	FILTER(?child1 != ?child2)
+}
+
+##Result:
+#ns:Pedro
+#ns:Tom
+#ns:Paul
+#ns:Michael
+#ns:Thomas
+
+##(5) List of the name of persons who are daughter of someone ## - - - - - - - - - - - - - -
+SELECT DISTINCT ?child1
+WHERE {
+	?parent1 ns:isParentOf ?child1 .
+	?child1 rdf:type ns:Female .
+	?parent1 ns:isParentOf ?child2 .
+	FILTER(?child1 != ?child2)
+}
+
+##Result:
+#ns:Chloé
+#ns:Sylvie
+
+##(6) List of the name of persons who are uncle of someone ## - - - - - - - - - - - - - - -
+SELECT DISTINCT?grandparent ?uncle ?parent ?son
+WHERE {
+	?grandparent ns:isParentOf ?parent .
+	?parent rdf:type ns:Male .
+	?grandparent ns:isParentOf ?uncle .
+	?uncle rdf:type ns:Male .
+	?parent ns:isParentOf ?son
+	FILTER(?parent != ?uncle)
+}
+
+## Result:
+#ns:Peter	ns:Paul	ns:Thomas	ns:Tom
+#ns:Peter	ns:Paul	ns:Thomas	ns:Michael
+
+##(7) List of the name of persons who are married ## - - - - - - - - - - - - - - - - - - - -
+SELECT ?spouse
+WHERE {
+	?person ns:isMarriedWith ?spouse .
+	?spouse ns:name ?name
+}
+
+##Result:
+#Thomas
+#Sylvie
+#Marie
+#Peter
+#John
+#Alex
